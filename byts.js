@@ -93,7 +93,7 @@ function updateVidElem() {
     }
     if ($(reel).find('#byts-progbar').length === 0) {
         if ($('#byts-progbar').length === 0) {
-            $(reel).append('<div id="byts-progbar" style="cursor: pointer; width: 100%; height: 14px; background-color: #343434; position: absolute; margin-top: -20px; border-radius: 10px;"></div>');
+            $(reel).append('<div id="byts-progbar" style="user-select: none; cursor: pointer; width: 100%; height: 14px; background-color: #343434; position: absolute; margin-top: -20px; border-radius: 10px;"></div>');
 
         } else {
             $(reel).append($('#byts-progbar'));
@@ -129,6 +129,7 @@ function updateVidElem() {
         progress = document.createElement("div");
         progress.setAttribute("id", "byts-progress");
 
+        progress.style.userSelect = "none";
         progress.style.backgroundColor = "#FF0000";
         progress.style.height = "100%";
         progress.style.borderRadius = "10px";
@@ -163,7 +164,7 @@ function updateVidElem() {
         // TimeInfo Element
         if ($(reel).find('#byts-timeinfo').length === 0) {
             if ($('#byts-timeinfo').length === 0) {
-                $(reel).append('<div id="byts-timeinfo" style="display: flex; right: auto; left: auto; position: absolute; margin-top: ' + ($(reel).height() + 2) + 'px;"><div id="byts-timeinfo-textdiv" style="display: flex; margin-right: 5px; margin-top: 4px; color: white; font-size: 1.2rem;">' + `${padTo2Digits(curMinutes)}:${padTo2Digits(curSeconds)} / ${padTo2Digits(durMinutes)}:${padTo2Digits(durSeconds)}` + '</div></div>');
+                $(reel).append('<div id="byts-timeinfo" style="user-select: none; display: flex; right: auto; left: auto; position: absolute; margin-top: ' + ($(reel).height() + 2) + 'px;"><div id="byts-timeinfo-textdiv" style="display: flex; margin-right: 5px; margin-top: 4px; color: white; font-size: 1.2rem;">' + `${padTo2Digits(curMinutes)}:${padTo2Digits(curSeconds)} / ${padTo2Digits(durMinutes)}:${padTo2Digits(durSeconds)}` + '</div></div>');
             } else {
                 $(reel).append($('#byts-timeinfo'));
             }
@@ -179,7 +180,7 @@ function updateVidElem() {
     // Volume Slide
     if ($(reel).find('#byts-vol').length === 0) {
         if ($('#byts-vol').length === 0) {
-            $(reel).append('<input style="width: 100px; left: 0px; background-color: transparent; position: absolute; margin-top: ' + ($(reel).height() + 5) + 'px;" type="range" id="byts-vol" class="volslider" name="vol" min="0.0" max="1.0" step="0.01" value="' + "1.0" + '"></input>');
+            $(reel).append('<input style="user-select: none; width: 100px; left: 0px; background-color: transparent; position: absolute; margin-top: ' + ($(reel).height() + 5) + 'px;" type="range" id="byts-vol" class="volslider" name="vol" min="0.0" max="1.0" step="0.01" value="' + "1.0" + '"></input>');
         } else {
             $(reel).append($('#byts-vol'));
         }
@@ -196,7 +197,7 @@ function updateVidElem() {
     // AutoScroll
     if ($(reel).find('#byts-autoscroll-div').length === 0) {
         if ($('#byts-autoscroll-div').length === 0) {
-            $(reel).append('<div id="byts-autoscroll-div" style="display: flex; right: 0px; position: absolute; margin-top: ' + ($(reel).height() + 2) + 'px;"><div style="display: flex; margin-right: 5px; margin-top: 4px; color: white; font-size: 1.2rem;">Auto-Scroll: </div><label class="switch"><input id="byts-autoscroll-input" type="checkbox" checked><span class="slider round"></span></label></div>');
+            $(reel).append('<div id="byts-autoscroll-div" style="user-select: none; display: flex; right: 0px; position: absolute; margin-top: ' + ($(reel).height() + 2) + 'px;"><div style="display: flex; margin-right: 5px; margin-top: 4px; color: white; font-size: 1.2rem;">Auto-Scroll: </div><label class="switch"><input id="byts-autoscroll-input" type="checkbox" checked><span class="slider round"></span></label></div>');
         } else {
             $(reel).append($('#byts-autoscroll-div'));
         }
