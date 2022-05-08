@@ -161,7 +161,7 @@ function updateVidElem() {
         // TimeInfo
         if ($(reel).find('#byts-timeinfo').length === 0) {
             if ($('#byts-timeinfo').length === 0) {
-                $(reel).append('<div id="byts-timeinfo" style="display: flex; right: autopx; left: auto; position: absolute; margin-top: ' + ($(reel).height() + 2) + 'px;"><div id="byts-timeinfo-textdiv" style="display: flex; margin-right: 5px; margin-top: 4px; color: white; font-size: 1.2rem;">' + `${padTo2Digits(curMinutes)}:${padTo2Digits(curSeconds)} / ${padTo2Digits(durMinutes)}:${padTo2Digits(durSeconds)}` + '</div></div>');
+                $(reel).append('<div id="byts-timeinfo" style="display: flex; right: auto; left: auto; position: absolute; margin-top: ' + ($(reel).height() + 2) + 'px;"><div id="byts-timeinfo-textdiv" style="display: flex; margin-right: 5px; margin-top: 4px; color: white; font-size: 1.2rem;">' + `${padTo2Digits(curMinutes)}:${padTo2Digits(curSeconds)} / ${padTo2Digits(durMinutes)}:${padTo2Digits(durSeconds)}` + '</div></div>');
             } else {
                 $(reel).append($('#byts-timeinfo'));
             }
@@ -179,7 +179,7 @@ function updateVidElem() {
     // Volume Slide
     if ($(reel).find('#byts-vol').length === 0) {
         if ($('#byts-vol').length === 0) {
-            $(reel).append('<input style="left: 0px; background-color: transparent; position: absolute; margin-top: ' + ($(reel).height() + 5) + 'px;" type="range" id="byts-vol" class="volslider" name="vol" min="0.0" max="1.0" step="0.01" value="' + "1.0" + '"></input>');
+            $(reel).append('<input style="width: 100px; left: 0px; background-color: transparent; position: absolute; margin-top: ' + ($(reel).height() + 5) + 'px;" type="range" id="byts-vol" class="volslider" name="vol" min="0.0" max="1.0" step="0.01" value="' + "1.0" + '"></input>');
         } else {
             $(reel).append($('#byts-vol'));
         }
