@@ -1,4 +1,7 @@
 /*
+0.1.2:
+        -| Added current time and duration info
+
 0.1.1:
         -| keep a low number of ytd-reel-video-renderer
            by always removing 9 when it became above 28 ones
