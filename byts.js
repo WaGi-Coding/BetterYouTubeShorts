@@ -164,14 +164,14 @@ function updateVidElem() {
         // TimeInfo Element
         if ($(reel).find('#byts-timeinfo').length === 0) {
             if ($('#byts-timeinfo').length === 0) {
-                $(reel).append('<div id="byts-timeinfo" style="user-select: none; display: flex; right: auto; left: auto; position: absolute; margin-top: ' + ($(reel).height() + 2) + 'px;"><div id="byts-timeinfo-textdiv" style="display: flex; margin-right: 5px; margin-top: 4px; color: white; font-size: 1.2rem;">' + `${padTo2Digits(curMinutes)}:${padTo2Digits(curSeconds)} / ${padTo2Digits(durMinutes)}:${padTo2Digits(durSeconds)}` + '</div></div>');
+                $(reel).append('<div id="byts-timeinfo" style="user-select: none; display: flex; right: auto; left: auto; position: absolute; margin-top: ' + ($(reel).height() + 2) + 'px;"><div id="byts-timeinfo-textdiv" style="display: flex; margin-right: 5px; margin-top: 4px; color: white; font-size: 1.2rem;">' + `${curMinutes}:${padTo2Digits(curSeconds)} / ${durMinutes}:${padTo2Digits(durSeconds)}` + '</div></div>');
             } else {
                 $(reel).append($('#byts-timeinfo'));
             }
             bytsTimeInfo = $('#byts-timeinfo');
         }
 
-        $('#byts-timeinfo-textdiv').text(`${padTo2Digits(curMinutes)}:${padTo2Digits(curSeconds)} / ${padTo2Digits(durMinutes)}:${padTo2Digits(durSeconds)}`);
+        $('#byts-timeinfo-textdiv').text(`${curMinutes}:${padTo2Digits(curSeconds)} / ${durMinutes}:${padTo2Digits(durSeconds)}`);
     }
 
     $('#byts-timeinfo').css('margin-top', $(reel).height() + 2);
