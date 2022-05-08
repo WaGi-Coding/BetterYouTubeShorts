@@ -1,0 +1,37 @@
+{
+    "name": "Better YouTube Shorts",
+    "description": "Gives you a seekbar, autoplay option, volume options, etc.",
+    "version": "0.1.1",
+    "manifest_version": 3,
+    "web_accessible_resources": [{
+      "resources": [
+        "images/vol.png"
+      ],
+      "matches": ["*://*.youtube.com/*"]
+    }],
+    "content_scripts": [
+      {
+        "run_at": "document_idle",
+        "matches": ["*://*.youtube.com/shorts/*"],
+        "js": ["jquery.js", "byts.js"],
+        "css": ["style.css"]
+      }
+    ],
+    "permissions": [],
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+        "16": "/images/byts_16.png",
+        "32": "/images/byts_32.png",
+        "48": "/images/byts_48.png",
+        "128": "/images/byts_128.png"
+      }
+    },
+    "icons": {
+      "16": "/images/byts_16.png",
+      "32": "/images/byts_32.png",
+      "48": "/images/byts_48.png",
+      "128": "/images/byts_128.png"
+    }
+  }
+  
