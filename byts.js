@@ -79,7 +79,7 @@ function updateVidElem() {
     if (autoScrollVal == true && typeof $(vid).attr('loop') != 'undefined') {
         $(vid).removeAttr('loop');
         $(vid).on('ended', function () {
-            //console.log("ended");
+            // console.log("ended");
             $('#navigation-button-down').find("button").first().click();
         });
     }
@@ -209,15 +209,15 @@ function updateVidElem() {
             else {
                 autoScrollVal = false;
             }
-            if (autoScrollVal == true && $(vid).attr('loop') == true) {
+            if (autoScrollVal == true && typeof $(vid).attr('loop') != 'undefined') {
                 $(vid).removeAttr('loop');
                 $(vid).on('ended', function () {
-                    //console.log("ended");
+                    // console.log("ended");
                     $('#navigation-button-down').find("button").first().click();
                 });
             }
             else {
-                if ($(vid).attr('loop') == false) {
+                if (typeof $(vid).attr('loop') == 'undefined') {
                     $(vid).attr('loop', true);
                     $(vid).unbind('ended');
                 }
