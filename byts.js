@@ -79,7 +79,7 @@ function updateVidElem() {
     if (autoScrollVal == true && typeof $(vid).attr('loop') != 'undefined') {
         $(vid).removeAttr('loop');
         $(vid).on('ended', function () {
-            console.log("ended");
+            //console.log("ended");
             $('#navigation-button-down').find("button").first().click();
         });
     }
@@ -212,7 +212,7 @@ function updateVidElem() {
             if (autoScrollVal == true && $(vid).attr('loop') == true) {
                 $(vid).removeAttr('loop');
                 $(vid).on('ended', function () {
-                    console.log("ended");
+                    //console.log("ended");
                     $('#navigation-button-down').find("button").first().click();
                 });
             }
