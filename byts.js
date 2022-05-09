@@ -76,18 +76,17 @@ function updateVidElem() {
 
     $(vid).prop('volume', $('#byts-vol').val());
 
-    if (autoScrollVal == true && typeof $(vid).attr('loop') != 'undefined') {
+    if (autoScrollVal == true) {
         $(vid).removeAttr('loop');
+        $(vid).unbind('ended');
         $(vid).on('ended', function () {
-            // console.log("ended");
+            //console.log("ended");
             $('#navigation-button-down').find("button").first().click();
         });
     }
     else {
-        if (typeof $(vid).attr('loop') == 'undefined') {
-            $(vid).attr('loop', true);
-            $(vid).unbind('ended');
-        }
+        $(vid).attr('loop', true);
+        $(vid).unbind('ended');
     }
 
 
@@ -209,18 +208,17 @@ function updateVidElem() {
             else {
                 autoScrollVal = false;
             }
-            if (autoScrollVal == true && typeof $(vid).attr('loop') != 'undefined') {
+            if (autoScrollVal == true) {
                 $(vid).removeAttr('loop');
+                $(vid).unbind('ended');
                 $(vid).on('ended', function () {
-                    // console.log("ended");
+                    //console.log("ended");
                     $('#navigation-button-down').find("button").first().click();
                 });
             }
             else {
-                if (typeof $(vid).attr('loop') == 'undefined') {
-                    $(vid).attr('loop', true);
-                    $(vid).unbind('ended');
-                }
+                $(vid).attr('loop', true);
+                $(vid).unbind('ended');
             }
             // $(vid).prop('volume', $(this).val());
         });
