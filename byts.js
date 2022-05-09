@@ -54,7 +54,7 @@ async function LoadSettings() {
 
 window.onload = function () {
 
-    LoadSettings();
+    
 
 
 
@@ -63,7 +63,10 @@ window.onload = function () {
         if ($('ytd-shorts').length && $('.html5-video-player').length) {
             clearInterval(checkExist);
 
+            LoadSettings();
+            
             setInterval(updateVidElem, 50);
+
 
             addEventListener("keydown", function (e) {
                 switch (e.key.toUpperCase()) {
