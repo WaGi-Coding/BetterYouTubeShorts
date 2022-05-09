@@ -2,7 +2,7 @@
 0.1.2:
         -| Added current time and duration info
         -| Fixed video ended event bind spam
-        -| Keep Volume & AutoScroll Toggle value saved
+        -| Keep Volume & AutoScroll Toggle values saved
 
 0.1.1:
         -| Keep a low number of ytd-reel-video-renderer
@@ -36,15 +36,15 @@ var savedVolume = 1.0;
 var autoScrollVal = true;
 // -------
 
-async function LoadSettings(){
+async function LoadSettings() {
     await chrome.storage.local.get(['bytsVolume'], function (result) {
-        if(typeof result.bytsVolume !== 'undefined'){
+        if (typeof result.bytsVolume !== 'undefined') {
             savedVolume = result.bytsVolume;
         }
     });
 
     await chrome.storage.local.get(['bytsAutoscroll'], function (result) {
-        if(typeof result.bytsAutoscroll !== 'undefined'){
+        if (typeof result.bytsAutoscroll !== 'undefined') {
             autoScrollVal = result.bytsAutoscroll;
         }
     });
@@ -55,7 +55,7 @@ async function LoadSettings(){
 window.onload = function () {
 
     LoadSettings();
-    
+
 
 
     var checkExist = setInterval(() => {
@@ -224,7 +224,7 @@ function updateVidElem() {
     if ($(reel).find('#byts-autoscroll-div').length === 0) {
         if ($('#byts-autoscroll-div').length === 0) {
             let astc = '';
-            if(autoScrollVal){
+            if (autoScrollVal) {
                 astc = ' checked';
             }
             $(reel).append('<div id="byts-autoscroll-div" style="user-select: none; display: flex; right: 0px; position: absolute; margin-top: ' + ($(reel).height() + 2) + 'px;"><div style="display: flex; margin-right: 5px; margin-top: 4px; color: white; font-size: 1.2rem;">Auto-Scroll: </div><label class="switch"><input id="byts-autoscroll-input" type="checkbox"' + astc + '><span class="slider round"></span></label></div>');
@@ -236,7 +236,7 @@ function updateVidElem() {
         $('#byts-autoscroll-input').on('input change', function () {
             // console.log($(this).is(':checked'));
             chrome.storage.local.set({ bytsAutoscroll: $(this).is(':checked') }, function () {
-                
+
             });
             if ($(this).is(':checked')) {
                 autoScrollVal = true;
