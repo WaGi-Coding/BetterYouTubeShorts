@@ -1,16 +1,17 @@
 /*
 0.1.2:
         -| Added current time and duration info
+        -| Fixed video ended event bind spam
 
 0.1.1:
-        -| keep a low number of ytd-reel-video-renderer
+        -| Keep a low number of ytd-reel-video-renderer
            by always removing 9 when it became above 28 ones
            after youtube loaded more. This should prevent the lag
            from the simple script by holding the content amount it
            searches through low
 
 0.1.0:
-        -| init
+        -| Init
 */
 
 var $ = window.jQuery;
@@ -32,8 +33,9 @@ var lastCurSeconds = 0;
 
 window.onload = function () {
 
-    var checkExist = setInterval(() => {                                     // wait until any
-        if ($('ytd-shorts').length && $('.html5-video-player').length) {    //  video elements rendered
+    var checkExist = setInterval(() => {
+        // wait until any video elements rendered
+        if ($('ytd-shorts').length && $('.html5-video-player').length) {
             clearInterval(checkExist);
 
             setInterval(updateVidElem, 50);
@@ -49,7 +51,6 @@ window.onload = function () {
                         break;
 
                     default:
-                        //console.log(e.key.toUpperCase());
                         break;
                 }
             });
@@ -75,15 +76,18 @@ function updateVidElem() {
 
     $(vid).prop('volume', $('#byts-vol').val());
 
-    if (autoScrollVal == true) {
+    if (autoScrollVal == true && typeof $(vid).attr('loop') != 'undefined') {
         $(vid).removeAttr('loop');
         $(vid).on('ended', function () {
+            console.log("ended");
             $('#navigation-button-down').find("button").first().click();
         });
     }
     else {
-        $(vid).attr('loop', true);
-        $(vid).unbind('ended');
+        if (typeof $(vid).attr('loop') == 'undefined') {
+            $(vid).attr('loop', true);
+            $(vid).unbind('ended');
+        }
     }
 
 
@@ -116,12 +120,6 @@ function updateVidElem() {
         });
     }
     let time = ($(vid).prop('currentTime') / $(vid).prop('duration')) * 100;
-
-
-    // $(progbar).click((e) => {
-    //     $(vid).prop('currentTime', (e.offsetX * 1 / $(reel).outerWidth()) * $(vid).prop('duration'));
-    // });
-
 
 
     var progress = document.getElementById('byts-progress');
@@ -211,25 +209,22 @@ function updateVidElem() {
             else {
                 autoScrollVal = false;
             }
-            if (autoScrollVal == true) {
+            if (autoScrollVal == true && $(vid).attr('loop') == true) {
                 $(vid).removeAttr('loop');
                 $(vid).on('ended', function () {
+                    console.log("ended");
                     $('#navigation-button-down').find("button").first().click();
                 });
             }
             else {
-                $(vid).attr('loop', true);
-                $(vid).unbind('ended');
+                if ($(vid).attr('loop') == false) {
+                    $(vid).attr('loop', true);
+                    $(vid).unbind('ended');
+                }
             }
             // $(vid).prop('volume', $(this).val());
         });
     }
 
     $('#byts-autoscroll-div').css('margin-top', $(reel).height() + 2);
-
-
-
-    // $(reel).find('#byts-progbar').first().html('<div style="width:' + time + '%; height: 100%; background-color: #FF0000; border-radius: 10px;"></div>');
-
-
 }
