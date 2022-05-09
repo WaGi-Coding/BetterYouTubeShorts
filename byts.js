@@ -50,13 +50,7 @@ async function LoadSettings() {
     });
 }
 
-
-
 window.onload = function () {
-
-    
-
-
 
     var checkExist = setInterval(() => {
         // wait until any video elements rendered
@@ -88,6 +82,32 @@ window.onload = function () {
 
 function padTo2Digits(num) {
     return num.toString().padStart(2, '0');
+}
+
+function retrieveWindowVariables(variables) {
+    var ret = {};
+
+    var scriptContent = "";
+    for (var i = 0; i < variables.length; i++) {
+        var currVariable = variables[i];
+        scriptContent += "if (typeof " + currVariable + " !== 'undefined') $('body').attr('tmp_" + currVariable + "', JSON.stringify(" + currVariable + "));\n"
+    }
+
+    var script = document.createElement('script');
+    script.id = 'tmpScript';
+    script.src = 'unsafe-inline';
+    script.appendChild(document.createTextNode(scriptContent));
+    (document.body || document.head || document.documentElement).appendChild(script);
+
+    for (var i = 0; i < variables.length; i++) {
+        var currVariable = variables[i];
+        ret[currVariable] = $.parseJSON($("body").attr("tmp_" + currVariable));
+        $("body").removeAttr("tmp_" + currVariable);
+    }
+
+     $("#tmpScript").remove();
+
+    return ret;
 }
 
 function updateVidElem() {
@@ -237,6 +257,8 @@ function updateVidElem() {
         bytsVol = $('#byts-autoscroll-div');
 
         $('#byts-autoscroll-input').on('input change', function () {
+            
+            // console.log(window.ytInitialData['overlay']["reelPlayerOverlayRenderer"]["menu"]);
             // console.log($(this).is(':checked'));
             chrome.storage.local.set({ bytsAutoscroll: $(this).is(':checked') }, function () {
 
