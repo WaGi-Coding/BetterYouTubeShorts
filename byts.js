@@ -3,6 +3,7 @@
         -| Added current time and duration info
         -| Fixed video ended event bind spam
         -| Keep Volume & AutoScroll Toggle values saved
+        -| Added upload-date information (loads in slower because the data first has to be requested!)
 
 0.1.1:
         -| Keep a low number of ytd-reel-video-renderer
