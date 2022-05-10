@@ -330,14 +330,13 @@ async function AddUploadDateIfNeeded() {
                 html = data;
             });
     
-            //console.log(html.match('(?<=var ytInitialData = ).*(?=;</script>)'));
-            // let jsonString = betweenMarkers(html, 'var ytInitialData = ', ';</script>');
-            let jsonString = html.match('(?<=var ytInitialData = ).*(?=;</script>)');
+            // let jsonString = html.match('(?<=var ytInitialData = ).*(?=;</script>)');
+            let jsonString = html.substring(html.indexOf('var ytInitialData = '));
 
-            //console.log(jsonString);
+            jsonString = jsonString.substring("var ytInitialData = ".length, jsonString.indexOf(';</script>'));
+
             let jObj = JSON.parse(jsonString);
-            
-            let ulDate = findValues(jObj, 'publishTimeText')[0]['runs'][1]['text'];
+            let ulDate = findValues(jObj, 'publishTimeText')[0].runs[1].text;
 
             if (typeof ulDate != 'undefined') {
                 reel.find('#channel-name').find('#text').append('<span id="byts-uploaddate"><br>' + ulDate + '</span>');
