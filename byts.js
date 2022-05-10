@@ -18,6 +18,7 @@
 var $ = window.jQuery;
 var vid = null;
 var reel = null;
+var udTimer = null;
 
 var progbar = null;
 
@@ -29,6 +30,7 @@ var bytsTimeInfo = null;
 
 
 var lastCurSeconds = 0;
+
 
 
 // Storage
@@ -50,28 +52,51 @@ async function LoadSettings() {
     });
 }
 
-window.onload = function () {
+function findValues(obj, key) {
+    return findValuesHelper(obj, key, []);
+}
 
+function findValuesHelper(obj, key, list) {
+    if (!obj) return list;
+    if (obj instanceof Array) {
+        for (var i in obj) {
+            list = list.concat(findValuesHelper(obj[i], key, []));
+        }
+        return list;
+    }
+    if (obj[key]) list.push(obj[key]);
+
+    if ((typeof obj == "object") && (obj !== null)) {
+        var children = Object.keys(obj);
+        if (children.length > 0) {
+            for (i = 0; i < children.length; i++) {
+                list = list.concat(findValuesHelper(obj[children[i]], key, []));
+            }
+        }
+    }
+    return list;
+}
+
+window.onload = function () {
     var checkExist = setInterval(() => {
         // wait until any video elements rendered
         if ($('ytd-shorts').length && $('.html5-video-player').length) {
             clearInterval(checkExist);
 
             LoadSettings();
-            
+
             setInterval(updateVidElem, 50);
 
+            udTimer = setInterval(AddUploadDateIfNeeded, 50);
 
             addEventListener("keydown", function (e) {
                 switch (e.key.toUpperCase()) {
-
                     case "ARROWLEFT":
                         $(vid).prop('currentTime', $(vid).prop('currentTime') - 2)
                         break;
                     case "ARROWRIGHT":
                         $(vid).prop('currentTime', $(vid).prop('currentTime') + 2)
                         break;
-
                     default:
                         break;
                 }
@@ -105,7 +130,7 @@ function retrieveWindowVariables(variables) {
         $("body").removeAttr("tmp_" + currVariable);
     }
 
-     $("#tmpScript").remove();
+    $("#tmpScript").remove();
 
     return ret;
 }
@@ -139,7 +164,7 @@ function updateVidElem() {
 
 
     reel = $(vid).closest('ytd-reel-video-renderer');
-    if ($(vid).length === 0) {
+    if ($(reel).length === 0) {
         return;
     }
     if ($(reel).find('#byts-progbar').length === 0) {
@@ -257,7 +282,7 @@ function updateVidElem() {
         bytsVol = $('#byts-autoscroll-div');
 
         $('#byts-autoscroll-input').on('input change', function () {
-            
+
             // console.log(window.ytInitialData['overlay']["reelPlayerOverlayRenderer"]["menu"]);
             // console.log($(this).is(':checked'));
             chrome.storage.local.set({ bytsAutoscroll: $(this).is(':checked') }, function () {
@@ -286,4 +311,48 @@ function updateVidElem() {
     }
 
     $('#byts-autoscroll-div').css('margin-top', $(reel).height() + 2);
+}
+
+async function AddUploadDateIfNeeded() {
+    vid = $('.html5-video-player').first().find('video').first();
+
+    if ($(vid).length === 0) {
+        return;
+    }
+
+    reel = $(vid).closest('ytd-reel-video-renderer');
+    if ($(vid).length === 0) {
+        return;
+    }
+
+    
+
+    if ($(reel).find('#channel-name').find('#byts-uploaddate').length === 0) {
+        clearInterval(udTimer);
+
+        try {
+            let html = '';
+            await $.get(window.location.href, function (data) {
+                html = data;
+            });
+    
+            //console.log(html.match('(?<=var ytInitialData = ).*(?=;</script>)'));
+            // let jsonString = betweenMarkers(html, 'var ytInitialData = ', ';</script>');
+            let jsonString = html.match('(?<=var ytInitialData = ).*(?=;</script>)');
+
+            //console.log(jsonString);
+            let jObj = JSON.parse(jsonString);
+            
+            let ulDate = findValues(jObj, 'publishTimeText')[0]['runs'][1]['text'];
+
+            if (typeof ulDate != 'undefined') {
+                reel.find('#channel-name').find('#text').append('<span id="byts-uploaddate"><br>' + ulDate + '</span>');
+            }
+            udTimer = setInterval(AddUploadDateIfNeeded, 50);
+        } catch (error) {
+            // alert("error: " + error);
+            udTimer = setInterval(AddUploadDateIfNeeded, 50);
+            return;
+        }
+    }
 }

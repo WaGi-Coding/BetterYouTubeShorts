@@ -5,9 +5,7 @@
     "manifest_version": 3,
     "web_accessible_resources": [{
       "resources": [
-        "images/vol.png",
-        "uploadDateReveal.js",
-        "jquery.js"
+        "images/vol.png"
       ],
       "matches": ["*://*.youtube.com/*"]
     }],
@@ -15,7 +13,7 @@
       {
         "run_at": "document_idle",
         "matches": ["*://*.youtube.com/shorts/*"],
-        "js": ["jquery.js", "byts.js", "inlineInject.js"],
+        "js": ["jquery.js", "byts.js"],
         "css": ["style.css"]
       }
     ],
