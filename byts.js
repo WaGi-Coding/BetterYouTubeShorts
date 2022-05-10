@@ -332,7 +332,7 @@ async function AddUploadDateIfNeeded() {
 
             await $.get(window.location.href, function (data) {
 
-                if(reelId != $(reel).attr('id') || $(reel).find('#channel-name').find('#byts-uploaddate').length !== 0){
+                if (reelId != $(reel).attr('id') || $(reel).find('#channel-name').find('#byts-uploaddate').length !== 0) {
                     udTimer = setInterval(AddUploadDateIfNeeded, 50);
                     return;
                 }
@@ -346,9 +346,24 @@ async function AddUploadDateIfNeeded() {
 
                 let jObj = JSON.parse(jsonString);
                 let ulDate = findValues(jObj, 'publishTimeText')[0].runs[1].text;
+                let viewObj = findValues(jObj, 'viewCountText')[0].runs;
+                let views = viewObj[0].text;
+                let viewsText = viewObj[1].text;
 
-                if (typeof ulDate != 'undefined') {
-                    $(reel).find('#channel-name').find('#text').append('<span id="byts-uploaddate"><br>' + ulDate + '</span>');
+                let displayText = '';
+
+                views = views.replaceAll(',', '.');
+
+                if (typeof ulDate == 'undefined') {
+                    ulDate = '';
+                }
+
+                if (typeof viewObj != 'undefined') {
+                    displayText = '<br>' + views + ' ' + viewsText;
+                }
+
+                if (typeof ulDate != 'undefined' || typeof viewObj != 'undefined') {
+                    $(reel).find('#channel-name').find('#text').append('<span id="byts-uploaddate"><br>' + ulDate + displayText + '</span>');
                 }
             });
             udTimer = setInterval(AddUploadDateIfNeeded, 50);
