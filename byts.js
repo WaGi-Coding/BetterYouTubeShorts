@@ -332,7 +332,7 @@ async function AddUploadDateIfNeeded() {
 
             await $.get(window.location.href, function (data) {
 
-                if(reelId != $(reel).attr('id')){
+                if(reelId != $(reel).attr('id') || $(reel).find('#channel-name').find('#byts-uploaddate').length !== 0){
                     udTimer = setInterval(AddUploadDateIfNeeded, 50);
                     return;
                 }
