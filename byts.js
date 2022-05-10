@@ -314,18 +314,12 @@ function updateVidElem() {
 }
 
 async function AddUploadDateIfNeeded() {
-    vid = $('.html5-video-player').first().find('video').first();
-
     if ($(vid).length === 0) {
         return;
     }
-
-    reel = $(vid).closest('ytd-reel-video-renderer');
-    if ($(vid).length === 0) {
+    if ($(reel).length === 0) {
         return;
     }
-
-    
 
     if ($(reel).find('#channel-name').find('#byts-uploaddate').length === 0) {
         clearInterval(udTimer);
