@@ -32,7 +32,8 @@ var bytsTimeInfo = null;
 
 var lastCurSeconds = 0;
 
-
+var xhr = new XMLHttpRequest();
+var windloc = '';
 
 // Storage
 var savedVolume = 1.0;
@@ -87,6 +88,15 @@ window.onload = function () {
             LoadSettings();
 
             setInterval(updateVidElem, 50);
+
+            windloc = window.location.href;
+
+            setInterval(() => {
+                if(windloc != window.location.href){
+                    windloc = window.location.href;
+                    xhr.abort();
+                }
+            }, 20);
 
             udTimer = setInterval(AddUploadDateIfNeeded, 50);
 
@@ -330,7 +340,7 @@ async function AddUploadDateIfNeeded() {
 
             let html = '';
 
-            await $.get(window.location.href, function (data) {
+            xhr = await $.get(window.location.href, function (data) {
 
                 if (reelId != $(reel).attr('id') || $(reel).find('#channel-name').find('#byts-uploaddate').length !== 0) {
                     udTimer = setInterval(AddUploadDateIfNeeded, 50);
