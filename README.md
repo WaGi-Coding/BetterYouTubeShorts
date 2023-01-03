@@ -1,3 +1,5 @@
+INFO: I already stopped working on that, because youtubes weird, useless changes, breaking stuff are getting annoying ^^
+
 # BYTS (Better YouTube Shorts) - Chrome Extension
 
 [>INSTALL FROM CHROME WEB STORE HERE<](https://chrome.google.com/webstore/detail/byts-better-youtube-short/fpmofjnogbfahlnbbdpmocddegppjebl)
